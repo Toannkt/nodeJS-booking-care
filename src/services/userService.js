@@ -199,7 +199,7 @@ let getAllCodeService = (typeInput) => {
                   let allcode = await db.Allcodes.findAll({
                         where: { type: typeInput },
                   });
-                  res.errCode = "0";
+                  res.errCode = 0;
                   res.data = allcode;
                   resolve(res);
             } catch (e) {
