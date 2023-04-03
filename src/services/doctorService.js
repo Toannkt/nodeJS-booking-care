@@ -194,14 +194,14 @@ const getScheduleByDate = (doctorId, date) => {
                   } else {
                         let dataSchedule = await db.Schedule.findAll({
                               where: { doctorId: doctorId, date: date },
-                              inculde: [{ model: db.Allcodes, as: "timeTypeData", attributes: ["valueEn", "valueVi"] }],
+                              include: [{ model: db.Allcodes, as: "timeTypeData", attributes: ["valueEn", "valueVi"] }],
                               raw: false,
                               nest: true,
                         });
                         if (!dataSchedule) dataSchedule = [];
                         resolve({
                               errCode: 0,
-                              date: dataSchedule,
+                              data: dataSchedule,
                         });
                   }
             } catch (e) {

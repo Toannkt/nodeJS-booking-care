@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
                   Schedule.belongsTo(models.Allcodes, {
                         foreignKey: "timeType",
                         targetKey: "keyMap",
-                        as: "timeTypeDate",
+                        as: "timeTypeData",
                   });
             }
       }
