@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import db from "../models/index";
 const salt = bcrypt.genSaltSync(10);
 
-let handleUserLogin = (email, password) => {
+const handleUserLogin = (email, password) => {
       return new Promise(async (resolve, reject) => {
             try {
                   let userData = {};
@@ -42,7 +42,7 @@ let handleUserLogin = (email, password) => {
       });
 };
 
-let getAllUsers = (userId) => {
+const getAllUsers = (userId) => {
       return new Promise(async (resolve, reject) => {
             try {
                   let users = "";
@@ -68,7 +68,7 @@ let getAllUsers = (userId) => {
       });
 };
 
-let checkUserEmail = (email) => {
+const checkUserEmail = (email) => {
       return new Promise(async (resolve, reject) => {
             try {
                   let user = await db.User.findOne({
@@ -82,7 +82,7 @@ let checkUserEmail = (email) => {
       });
 };
 
-let hashUserPassword = (password) => {
+const hashUserPassword = (password) => {
       return new Promise(async (resolve, reject) => {
             try {
                   let hashPassword = await bcrypt.hashSync(password, salt);
@@ -93,7 +93,7 @@ let hashUserPassword = (password) => {
       });
 };
 
-let createNewUser = async (data) => {
+const createNewUser = async (data) => {
       return new Promise(async (resolve, reject) => {
             try {
                   let check = await checkUserEmail(data.email);
@@ -127,8 +127,7 @@ let createNewUser = async (data) => {
       });
 };
 
-let deleteUser = (id) => {
-      console.log(id);
+const deleteUser = (id) => {
       return new Promise(async (resolve, reject) => {
             try {
                   let user = await db.User.findOne({
@@ -153,7 +152,7 @@ let deleteUser = (id) => {
       });
 };
 
-let updateUserData = (data) => {
+const updateUserData = (data) => {
       return new Promise(async (resolve, reject) => {
             try {
                   if (!data.id) {
@@ -192,7 +191,7 @@ let updateUserData = (data) => {
       });
 };
 
-let getAllCodeService = (typeInput) => {
+const getAllCodeService = (typeInput) => {
       return new Promise(async (resolve, reject) => {
             try {
                   let res = {};
