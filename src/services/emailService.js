@@ -15,7 +15,7 @@ let sendEmail = async (dataSend) => {
       });
 
       let info = await transporter.sendMail({
-            from: '"KhacToan<a>432" <toan.nguyenkhactoan432@hcmut.edu.vn>',
+            from: '"Booking Care By Ton432" <toan.nguyenkhactoan432@hcmut.edu.vn>',
             to: dataSend.reciverEmail,
             subject: "Thông tin đặt lịch khám bệnh",
             html: getBodyHTMLEmail(dataSend),

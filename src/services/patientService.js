@@ -74,12 +74,12 @@ let postVerifyBookAppointment = (data) => {
                               where: {
                                     doctorId: data.doctorId,
                                     token: data.token,
-                                    status: "S1",
+                                    statusId: "S1",
                               },
                               raw: false,
                         });
                         if (appointment) {
-                              appointment.status = "S2";
+                              appointment.statusId = "S2";
                               await appointment.save();
 
                               resolve({

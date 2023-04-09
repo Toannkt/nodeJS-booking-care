@@ -53,22 +53,11 @@ const getAllDoctor = () => {
 const createDetailDoctors = (data) => {
       return new Promise(async (resolve, reject) => {
             try {
-                  if (
-                        !data.doctorId ||
-                        !data.contentHTML ||
-                        !data.contentMarkdown ||
-                        !data.description ||
-                        !data.action ||
-                        !data.selectedPrice ||
-                        !data.selectedProvince ||
-                        !data.selectedPayment ||
-                        !data.nameClinic ||
-                        !data.addressClinic ||
-                        !data.note
-                  ) {
+                  let checkObj = checkRequiredFields(data);
+                  if (checkObj.isValid === false) {
                         resolve({
                               errCode: 1,
-                              message: "Missing parameter 'doctorId' || 'contentHTML' || 'contentMarkdown'!",
+                              message: `Missing parameter: ${checkObj.element}!`,
                         });
                   } else {
                         //upsert to markdown table
@@ -109,6 +98,8 @@ const createDetailDoctors = (data) => {
                               doctorInfor.nameClinic = data.nameClinic;
                               doctorInfor.addressClinic = data.addressClinic;
                               doctorInfor.note = data.note;
+                              doctorInfor.specialtyId = data.specialtyId;
+                              doctorInfor.clinicId = data.clinicId;
                               await doctorInfor.save();
                         } else {
                               await db.Doctor_Infor.create({
@@ -119,6 +110,8 @@ const createDetailDoctors = (data) => {
                                     nameClinic: data.nameClinic,
                                     addressClinic: data.addressClinic,
                                     note: data.note,
+                                    specialtyId: data.specialtyId,
+                                    clinicId: data.clinicId,
                               });
                         }
                         resolve({
@@ -130,6 +123,35 @@ const createDetailDoctors = (data) => {
                   reject(e);
             }
       });
+};
+
+const checkRequiredFields = (inputData) => {
+      let arrFields = [
+            "doctorId",
+            "contentHTML",
+            "contentMarkdown",
+            "action",
+            "selectedPrice",
+            "selectedPayment",
+            "selectedProvince",
+            "nameClinic",
+            "addressClinic",
+            "note",
+            "specialtyId",
+      ];
+      const isValid = true;
+      let element = "";
+      for (let i = 0; i < arrFields.length; i++) {
+            if (!inputData[arrFields[i]]) {
+                  isValid = false;
+                  element = arrFields[i];
+                  break;
+            }
+      }
+      return {
+            isValid,
+            element,
+      };
 };
 
 const getDetailDoctor = (id) => {
@@ -366,6 +388,7 @@ const getExtraDoctorById = (id) => {
 //             }
 //       });
 // };
+
 module.exports = {
       getTopDoctorHome: getTopDoctorHome,
       getAllDoctor: getAllDoctor,
